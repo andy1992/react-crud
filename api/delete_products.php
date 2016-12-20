@@ -16,13 +16,13 @@ if($_POST){
     $db = $database->getConnection();
     $product = new Product($db);
 
-    $ins="";
+    $ins = "";
     foreach($_POST['del_ids'] as $id){
         $ins.="{$id},";
     }
+    $ins = trim($ins, ",");
 
-    $ins=trim($ins, ",");
-
+    //echo $product->delete($ins) ;
     // delete the product
     echo $product->delete($ins) ? "true" : "false";
 }

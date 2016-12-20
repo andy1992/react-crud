@@ -1,3 +1,5 @@
+"use strict";
+
 var DeleteProductComponent = React.createClass({
     componentDidMount: function() {
         $('.page-header h1').text('Delete Product');
@@ -77,9 +79,8 @@ var UpdateProductComponent = React.createClass({
                 this.setState({name: p.name});
                 this.setState({price: p.price});
                 this.setState({description: p.description});
+                $('.page-header h1').text(p.name);
             }.bind(this));
-
-        $('.page-header h1').text('Update product');
     },
 
     componentWillUnmount: function() {
@@ -105,15 +106,15 @@ var UpdateProductComponent = React.createClass({
 
     onSave: function(e) {
         $.post('api/update_product.php', {
-            id: this.state.id,
-            name: this.state.name,
-            description: this.state.description,
-            price: this.state.price,
-            category_id: this.state.selectedCategoryId
-        },
-        function(res) {
-            this.setState({successUpdate: res});
-        }.bind(this));
+                id: this.state.id,
+                name: this.state.name,
+                description: this.state.description,
+                price: this.state.price,
+                category_id: this.state.selectedCategoryId
+            },
+            function(res) {
+                this.setState({successUpdate: res});
+            }.bind(this));
         e.preventDefault();
     },
 
@@ -144,67 +145,67 @@ var UpdateProductComponent = React.createClass({
                 <a href="#"
                    className="btn btn-primary margin-bottom-1em"
                 >
-                    Read Products
+                    All Products
                 </a>
                 <form onSubmit={this.onSave}>
                     <table className="table table-bordered table-hover">
                         <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={this.state.name}
-                                        onChange={this.onNameChange}
-                                    />
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.name}
+                                    onChange={this.onNameChange}
+                                />
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td>Description</td>
-                                <td>
+                        <tr>
+                            <td>Description</td>
+                            <td>
                                     <textarea
                                         className="form-control"
                                         value={this.state.description}
                                         onChange={this.onDescriptionChange}></textarea>
-                                </td>
-                            </tr>
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td>Price ($)</td>
-                                <td>
-                                    <input
-                                        type="number"
-                                        step="0.01"
-                                        value={this.state.price}
-                                        className="form-control"
-                                        onChange={this.onPriceChange}
-                                    />
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>Price ($)</td>
+                            <td>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={this.state.price}
+                                    className="form-control"
+                                    onChange={this.onPriceChange}
+                                />
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td>Category</td>
-                                <td>
-                                    <select
-                                        onChange={this.onCategoryChange}
-                                        className="form-control"
-                                        value={this.state.selectedCategoryId}
-                                    >
-                                        <option value="-1">Select Category...</option>
-                                        {categoriesOptions}
-                                    </select>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td>
+                                <select
+                                    onChange={this.onCategoryChange}
+                                    className="form-control"
+                                    value={this.state.selectedCategoryId}
+                                >
+                                    <option value="-1">Select Category...</option>
+                                    {categoriesOptions}
+                                </select>
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <button className="btn btn-primary"
-                                    onClick={this.onSave}>Save Changes</button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button className="btn btn-primary"
+                                        onClick={this.onSave}>Save Changes</button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </form>
@@ -236,10 +237,9 @@ var ReadOneProductComponent = React.createClass({
                 this.setState({name: p.name});
                 this.setState({description: p.description});
                 this.setState({price: p.price});
+                $('.page-header h1').text(p.name);
             }.bind(this)
         );
-
-        $('.page-header h1').text('Read Product');
     },
 
     componentWillUnmount: function() {
@@ -250,29 +250,29 @@ var ReadOneProductComponent = React.createClass({
         return (
             <div>
                 <a href="#"
-                    className="btn btn-primary margin-bottom-1em"
+                   className="btn btn-primary margin-bottom-1em"
                 >
-                    Read Products
+                    All Products
                 </a>
 
                 <table className="table table-bordered table-responsive">
                     <tbody>
-                        <tr>
-                            <td>Name</td>
-                            <td>{this.state.name}</td>
-                        </tr>
-                        <tr>
-                            <td>Description</td>
-                            <td>{this.state.description}</td>
-                        </tr>
-                        <tr>
-                            <td>Price ($)</td>
-                            <td>{this.state.price}</td>
-                        </tr>
-                        <tr>
-                            <td>Category</td>
-                            <td>{this.state.category_name}</td>
-                        </tr>
+                    <tr>
+                        <td>Name</td>
+                        <td>{this.state.name}</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>{this.state.description}</td>
+                    </tr>
+                    <tr>
+                        <td>Price ($)</td>
+                        <td>{this.state.price}</td>
+                    </tr>
+                    <tr>
+                        <td>Category</td>
+                        <td>{this.state.category_name}</td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
@@ -333,13 +333,13 @@ var ProductsTable = React.createClass({
 
         return (
             !rows.length
-            ? <div className="alert alert-danger" style={{marginTop:50}}>No products found.</div>
-            :
-            <table className="table table-bordered table-hover">
-                <thead>
+                ? <div className="alert alert-danger" style={{marginTop:50}}>No products found.</div>
+                :
+                <table className="table table-bordered table-hover">
+                    <thead>
                     <tr>
-                        <th>
-                            <input type="checkbox" onchange={this.props.toggleAll} />
+                        <th className="text-center">
+                            <input type="checkbox" onChange={this.props.toggleAll} />
                         </th>
                         <th>
                             <a onClick={this.props.sortChanged.bind(null, 'p.name', this.props.orderType)}>
@@ -367,11 +367,11 @@ var ProductsTable = React.createClass({
                         </th>
                         <th>Action</th>
                     </tr>
-                </thead>
-                <tbody>
+                    </thead>
+                    <tbody>
                     {rows}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
         );
     }
 });
@@ -402,15 +402,24 @@ var SearchByName = React.createClass({
 var TopActionsComponent = React.createClass({
     render: function() {
         return (
-            <div>
+            <div className="">
                 <SearchByName searchText={this.props.searchText} searchTerm={this.props.searchTerm} onInputSearchChange={this.props.onInputSearchChange} />
 
                 <a href="#create"
-                   className="btn btn-primary pull-right margin-bottom-1em"
+                   className="btn btn-primary margin-bottom-1em pull-right"
                 >
-                    <span className='glyphicon glyphicon-plus'></span>
+                    <span className='glyphicon glyphicon-plus'></span>&nbsp;
                     Create Product
                 </a>
+
+                <button
+                    className="btn btn-danger margin-bottom-1em pull-right"
+                    onClick={this.props.deleteSelected}
+                    style={{marginRight:'10px'}}
+                >
+                    <span className='glyphicon glyphicon-trash'></span>&nbsp;
+                    Delete Selected Products
+                </button>
             </div>
         );
     }
@@ -437,7 +446,7 @@ var PaginationComponent = React.createClass({
         for (let i=1; i <= pagesAmount; i++) {
             pageIndicators.push(
                 <li className={i == this.props.currentPage ? "active":""} key={i}>
-                    <a href={'#page='+i+'&search=' + this.props.search} onClick={this.props.onPageChanged.bind(null, i)}>{i}</a>
+                    <a href={'#page='+i+'&search=' + this.props.search + '&order_by=' + this.props.orderBy + '&order_type=' + this.props.orderType} onClick={this.props.onPageChanged.bind(null, i)}>{i}</a>
                 </li>
             )
         }
@@ -450,8 +459,17 @@ var PaginationComponent = React.createClass({
                         {
                             this.props.currentPage == 1 ? null :
                                 <li>
-                                    <a href={'#page=1&search=' + this.props.search} onClick={this.props.onPageChanged.bind(null,1)}>
+                                    <a href={'#page=1&search=' + this.props.search + '&order_by=' + this.props.orderBy + '&order_type=' + this.props.orderType} onClick={this.props.onPageChanged.bind(null,1)}>
                                         <span style={{marginRight: '0 .5em'}}>&laquo;</span>
+                                    </a>
+                                </li>
+                        }
+
+                        {
+                            this.props.currentPage == 1 ? null :
+                                <li>
+                                    <a href={'#page='+ (this.props.currentPage - 1) +'&search=' + this.props.search + '&order_by=' + this.props.orderBy + '&order_type=' + this.props.orderType} onClick={this.props.onPageChanged.bind(null,1)}>
+                                        <span style={{marginRight: '0 .5em'}}>&lsaquo;</span>
                                     </a>
                                 </li>
                         }
@@ -461,7 +479,16 @@ var PaginationComponent = React.createClass({
                         {
                             this.props.currentPage == pagesAmount ? null :
                                 <li>
-                                    <a href={'#page='+pagesAmount+'&search=' + this.props.search} onClick={this.props.onPageChanged.bind(null, pagesAmount)}>
+                                    <a href={'#page='+ (parseInt(this.props.currentPage) + 1) +'&search=' + this.props.search + '&order_by=' + this.props.orderBy + '&order_type=' + this.props.orderType} onClick={this.props.onPageChanged.bind(null, pagesAmount)}>
+                                        <span style={{marginRight: '0 .5em'}}>&rsaquo;</span>
+                                    </a>
+                                </li>
+                        }
+
+                        {
+                            this.props.currentPage == pagesAmount ? null :
+                                <li>
+                                    <a href={'#page='+pagesAmount+'&search=' + this.props.search + '&order_by=' + this.props.orderBy + '&order_type=' + this.props.orderType} onClick={this.props.onPageChanged.bind(null, pagesAmount)}>
                                         <span style={{marginRight: '0 .5em'}}>&raquo;</span>
                                     </a>
                                 </li>
@@ -478,7 +505,7 @@ var PaginationComponent = React.createClass({
                                    max={pagesAmount}
                                    required
                                    placeholder='Type page number...'
-                                   onChange={this.props.onInputPageChange}/>
+                                   onChange={this.props.onInputPageChange} />
 
                             <div className="input-group-btn">
                                 <button className="btn btn-primary" onClick={this.props.goToInputPage}>
@@ -498,8 +525,8 @@ var ReadProductsComponent = React.createClass({
             search: this.props.search,
             currentPage: this.props.currentPage,
             limit: this.props.itemPerPage,
-            orderBy: 'p.name',
-            orderType: 'asc',
+            orderBy: this.props.orderBy,
+            orderType: this.props.orderType,
             products: [],
             count: 0,
             loading: true,
@@ -544,16 +571,15 @@ var ReadProductsComponent = React.createClass({
 
     onInputPageChange: function(e) {
         var page = parseInt(e.target.value);
-        var totalPage = Math.ceil(this.state.count / this.state.item_per_page);
+        var totalPage = Math.ceil(this.state.count / this.state.limit);
+
         if(page > totalPage) {
             page = totalPage;
         } else if(page <= 0) {
             page = 1;
-        } else {
-            page = this.state.currentPage;
         }
-        //this.setState({currentPage: page});
-        this.state.currentPage = page;
+
+        this.setState({currentPage: page});
     },
 
     goToInputPage: function(e) {
@@ -565,7 +591,8 @@ var ReadProductsComponent = React.createClass({
 
     pageChanged: function(destPage, e) {
         //e.preventDefault();
-        window.location.replace('#page=' + destPage + '&search=' + this.state.search);
+        window.location.replace('#page=' + destPage + '&search=' + this.state.search + '&order_by=' + this.state.orderBy + '&order_type=' + this.state.orderType);
+        //window.location.replace('#page=' + destPage + '&search=' + this.state.search);
         /**
          * setState() does not immediately mutate this.state but creates a pending state transition. Accessing this.state after calling this method
          * can potentially return the existing value. There is no guarantee of synchronous operation of calls to setState and calls may be batched
@@ -594,7 +621,8 @@ var ReadProductsComponent = React.createClass({
     },
 
     searchTerm: function(e) {
-        window.location.replace('#page=' + this.state.currentPage + '&search=' + this.state.search);
+        //window.location.replace('#page=' + this.state.currentPage + '&search=' + this.state.search);
+        window.location.replace('#page=' + this.state.currentPage + '&search=' + this.state.search + '&order_by=' + this.state.orderBy + '&order_type=' + this.state.orderType);
         if(!e.target.value) {
             this.setState({
                 currentPage: 1
@@ -624,7 +652,7 @@ var ReadProductsComponent = React.createClass({
         }
     },
 
-    toggleOne: function(e, id) {
+    toggleOne: function(checked, id) {
         if(checked){
             this.setState({selectedRows: this.state.selectedRows.concat([id])});
         }else {
@@ -634,7 +662,7 @@ var ReadProductsComponent = React.createClass({
         }
     },
 
-    toggleAll: function() {
+    toggleAll: function(e) {
         if(e.target.checked) {
             var selectedProducts = [];
             this.state.products.forEach(function(product) {
@@ -646,12 +674,40 @@ var ReadProductsComponent = React.createClass({
         }
     },
 
+    deleteSelected: function() {
+        if(this.state.selectedRows.length > 0) {
+            var r = confirm("Are you sure you want to delete the selected product(s)?");
+            if (r == true) {
+                $.post('api/delete_products.php',
+                    {del_ids: this.state.selectedRows},
+                    function (res) {
+                        if (res == 'true') {
+                            // update component state by removing the products we just deleted
+                            this.setState({
+                                products: this.state.products.filter((el) =>
+                                this.state.selectedRows.indexOf(el.id) < 0)
+                            });
+                            this.setState({selectedRows: []});
+                            // Reload the products list
+                            this.populateProducts();
+                            this.pageChanged(1);
+                        } else {
+                            alert("Unable to delete product(s).");
+                        }
+                    }.bind(this)
+                );
+            }
+        } else {
+            alert('Please select one or more products to be deleted.');
+        }
+    },
+
     render: function() {
         var filteredProducts = this.state.products;
         if(this.state.search != ''){
             $('.page-header h1').text('Search "'+ this.state.search +'"');
         }else{
-            $('.page-header h1').text('Read Products');
+            $('.page-header h1').text('All Products');
         }
 
         return (
@@ -660,11 +716,15 @@ var ReadProductsComponent = React.createClass({
                     searchText={this.state.search}
                     onInputSearchChange={this.onInputSearchChanged}
                     searchTerm={this.searchTerm}
+                    deleteSelected={this.deleteSelected}
                 />
 
                 <Loader isLoading={this.state.loading} />
                 <ProductsTable
+                    toggleAll={this.toggleAll}
+                    toggleOne={this.toggleOne}
                     products={filteredProducts}
+                    orderBy={this.state.orderBy}
                     orderType={this.state.orderType}
                     sortClass={this.sortClass}
                     sortChanged={this.sortChanged}
@@ -678,7 +738,9 @@ var ReadProductsComponent = React.createClass({
                     productsAmount={this.state.count}
                     onPageChanged={this.pageChanged}
                     onInputPageChange={this.onInputPageChange}
-                    goToInputPage={this.goToInputPage} />
+                    goToInputPage={this.goToInputPage}
+                    orderBy={this.props.orderBy}
+                    orderType={this.props.orderType} />
             </div>
         );
     }
@@ -736,20 +798,20 @@ var CreateProductComponent = React.createClass({
 
     onSave: function(e) {
         $.post('api/create_product.php', {
-            name: this.state.name,
-            description: this.state.description,
-            category_id: this.state.selectedCategoryId,
-            price: this.state.price
-        },
-        function(res) {
-            this.setState({successCreation: res});
-            if(res == 'true') {
-                this.setState({name: ''});
-                this.setState({description: ''});
-                this.setState({selectedCategoryId: -1});
-                this.setState({price: 0.0});
-            }
-        }.bind(this));
+                name: this.state.name,
+                description: this.state.description,
+                category_id: this.state.selectedCategoryId,
+                price: this.state.price
+            },
+            function(res) {
+                this.setState({successCreation: res});
+                if(res == 'true') {
+                    this.setState({name: ''});
+                    this.setState({description: ''});
+                    this.setState({selectedCategoryId: -1});
+                    this.setState({price: 0.0});
+                }
+            }.bind(this));
         e.preventDefault();
     },
 
@@ -780,75 +842,75 @@ var CreateProductComponent = React.createClass({
 
                 <a href="#"
                    className="btn btn-primary margin-bottom-1em">
-                    Read Product
+                    All Products
                 </a>
 
                 <form onSubmit={this.onSave}>
                     <table className="table table-bordered table-hover">
                         <tbody>
-                            <tr>
-                                <td>Name</td>
-                                <td>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={this.state.name}
-                                        required
-                                        onChange={this.onNameChange}
-                                    />
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td>
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    value={this.state.name}
+                                    required
+                                    onChange={this.onNameChange}
+                                />
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td>Description</td>
-                                <td>
+                        <tr>
+                            <td>Description</td>
+                            <td>
                                     <textarea
                                         className="form-control"
                                         value={this.state.description}
                                         required
                                         onChange={this.onDescriptionChange}>
                                     </textarea>
-                                </td>
-                            </tr>
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td>Price ($)</td>
-                                <td>
-                                    <input
-                                        type="number"
-                                        step="0.01"
-                                        className="form-control"
-                                        value={this.state.price}
-                                        required
-                                        onChange={this.onPriceChange}
-                                    />
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>Price ($)</td>
+                            <td>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    className="form-control"
+                                    value={this.state.price}
+                                    required
+                                    onChange={this.onPriceChange}
+                                />
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td>Category</td>
-                                <td>
-                                    <select
-                                        onChange={this.onCategoryChange}
-                                        className="form-control"
-                                        value={this.state.selectedCategoryId}
-                                    >
-                                        <option value="-1">Select category...</option>
-                                        {categoriesOptions}
-                                    </select>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>Category</td>
+                            <td>
+                                <select
+                                    onChange={this.onCategoryChange}
+                                    className="form-control"
+                                    value={this.state.selectedCategoryId}
+                                >
+                                    <option value="-1">Select category...</option>
+                                    {categoriesOptions}
+                                </select>
+                            </td>
+                        </tr>
 
-                            <tr>
-                                <td></td>
-                                <td>
-                                    <button
-                                        className="btn btn-primary"
-                                        onClick={this.onSave}>
-                                        Save
-                                    </button>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={this.onSave}>
+                                    Save
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </form>
@@ -878,102 +940,3 @@ var NotFoundComponent = React.createClass({
         );
     }
 });
-
-var MainApp = React.createClass({
-    getInitialState: function() {
-        return {
-            currentMode: 'read',
-            productId: null
-        };
-    },
-
-    changeAppMode: function(newMode, productId) {
-        this.setState({
-            currentMode: newMode
-        });
-
-        if(productId !== undefined) {
-            this.setState({
-                productId: productId
-            });
-        }
-    },
-
-    render: function() {
-        var defaultItemPerPage = 5;
-        var defaultSearchText = "";
-        var defaultCurrentPage = 1;
-
-        var currentMode = this.props.location[0] || 'read';
-
-        currentMode = currentMode.startsWith('update') ? (currentMode.split('?'))[0] : currentMode;
-        currentMode = currentMode.startsWith('create') ? (currentMode.split('?'))[0] : currentMode;
-        currentMode = currentMode.startsWith('page') ? (currentMode.split('='))[0] : currentMode;
-        currentMode = currentMode.startsWith('search') ? (currentMode.split('='))[0] : currentMode;
-        currentMode = currentMode.startsWith('show') ? (currentMode.split('?'))[0] : currentMode;
-        currentMode = currentMode.startsWith('delete') ? (currentMode.split('?'))[0] : currentMode;
-
-        var productId = 0;
-        var searchedTerm = '';
-        var search = '';
-        var initialPage = defaultCurrentPage;
-        var pageParameterName = 'page';
-        var searchParameterName = 'search';
-
-        search = getParameterByName(searchParameterName);
-        searchedTerm = (search === undefined) ? '' : search;
-        var modeComponent = <ReadProductsComponent itemPerPage={defaultItemPerPage} currentPage={defaultCurrentPage} search={defaultSearchText} />;
-
-        switch(currentMode) {
-            case 'read':
-                break;
-            case 'page':
-                initialPage = getParameterByName(pageParameterName);
-                initialPage = parseInt(initialPage) <= 0 ? "1" : initialPage;
-                modeComponent = <ReadProductsComponent itemPerPage="5" currentPage={initialPage} search={searchedTerm} />;
-                break;
-            case 'show':
-                productId = (this.props.location[0].split('?')[1]).split('=')[1];
-                modeComponent = <ReadOneProductComponent productId={productId} />;
-                break;
-            case 'create':
-                modeComponent = <CreateProductComponent changeAppMode={this.changeAppMode} />;
-                break;
-            case 'update':
-                productId = (this.props.location[0].split('?')[1]).split('=')[1];
-                modeComponent = <UpdateProductComponent productId={productId}/>;
-                break;
-            case 'delete':
-                productId = (this.props.location[0].split('?')[1]).split('=')[1];
-                modeComponent = <DeleteProductComponent productId={productId} />;
-                break;
-            default:
-                $('.page-header').html('<h1>Oops..</h1>');
-                modeComponent = <NotFoundComponent />;
-                break;
-        }
-        return modeComponent;
-    }
-});
-
-function getParameterByName(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?#&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
-function handleNewWindowLocation() {
-    let location = window.location.hash.replace(/^#\/?|\/$/g, '').split('/');
-    ReactDOM.render(
-        <MainApp location={location} />,
-        document.getElementById('content')
-    );
-}
-
-handleNewWindowLocation();
-
-window.addEventListener('hashchange', handleNewWindowLocation, false);

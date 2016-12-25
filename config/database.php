@@ -3,9 +3,9 @@ class Database{
 
     // specify your own database credentials
     private $host = "localhost";
-    private $db_name = "php-react";
+    private $db_name = "react-crud";
     private $username = "root";
-    private $password = "";
+    private $password = "secret";
     public $conn;
 
     // get the database connection

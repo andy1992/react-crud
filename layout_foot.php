@@ -2,8 +2,8 @@
 <!-- /container -->
 
 <!-- react js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+<script src="libs/js/react.js"></script>
+<script src="libs/js/react-dom.js"></script>
 <script src="libs/js/JSXTransformer.js" type="text/javascript"></script>
 
 <!-- main react components -->
@@ -13,6 +13,9 @@
 <script src="libs/js/react/components/products/create.jsx" type="text/jsx"></script>
 <script src="libs/js/react/components/products/show.jsx" type="text/jsx"></script>
 <script src="libs/js/react/components/products/index.jsx" type="text/jsx"></script>
+<script src="libs/js/react/components/login/login.jsx" type="text/jsx"></script>
+<script src="libs/js/react/components/login/register.jsx" type="text/jsx"></script>
+<script src="libs/js/react/components/layouts/nav.jsx" type="text/jsx"></script>
 <script src="libs/js/react/components/layout.jsx" type="text/jsx"></script>
 
 <!-- jQuery library -->

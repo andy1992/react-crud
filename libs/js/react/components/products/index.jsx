@@ -14,20 +14,25 @@ var ProductRow = React.createClass({
                 <td>{this.props.product.description}</td>
                 <td>${parseFloat(this.props.product.price).toFixed(2)}</td>
                 <td>{this.props.product.category_name}</td>
-                <td>
-                    <a href={'#show?id='+this.props.product.id}
-                       className="btn btn-info m-r-1em">
-                        Read
-                    </a>
-                    <a href={'#update?id='+this.props.product.id}
-                       className="btn btn-primary m-r-1em">
-                        Edit
-                    </a>
-                    <a href={'#delete?id='+this.props.product.id}
-                       className="btn btn-danger">
-                        Delete
-                    </a>
-                </td>
+                {
+                    (this.props.isLoggedIn == 'true')
+                    ?
+                        <td>
+                            <a href={'#show?id='+this.props.product.id}
+                               className="btn btn-info m-r-1em">
+                                Read
+                            </a>
+                            <a href={'#update?id='+this.props.product.id}
+                               className="btn btn-primary m-r-1em">
+                                Edit
+                            </a>
+                            <a href={'#delete?id='+this.props.product.id}
+                               className="btn btn-danger">
+                                Delete
+                            </a>
+                        </td>
+                    : null
+                }
             </tr>
         );
     }
@@ -47,6 +52,7 @@ var ProductsTable = React.createClass({
                     changeAppMode={this.props.changeAppMode}
                     toggleOne={this.props.toggleOne}
                     selectedRows={this.props.selectedRows}
+                    isLoggedIn={this.props.isLoggedIn}
                 />
             );
         }.bind(this));
@@ -58,34 +64,39 @@ var ProductsTable = React.createClass({
                 <table className="table table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th className="text-center">
+                        <th className="text-center" style={{width:'1.5%'}}>
                             <input type="checkbox" onChange={this.props.toggleAll} />
                         </th>
-                        <th>
+                        <th style={{width:'20%'}}>
                             <a onClick={this.props.sortChanged.bind(null, 'p.name', this.props.orderType)}>
                                 Name
                                 <i className={this.props.sortClass('p.name')}></i>
                             </a>
                         </th>
-                        <th>
+                        <th style={{width:'40%'}}>
                             <a onClick={this.props.sortChanged.bind(null, 'description', this.props.orderType)}>
                                 Description
                                 <i className={this.props.sortClass('description')}></i>
                             </a>
                         </th>
-                        <th>
+                        <th style={{width:'9%'}}>
                             <a onClick={this.props.sortChanged.bind(null, 'price', this.props.orderType)}>
                                 Price
                                 <i className={this.props.sortClass('price')}></i>
                             </a>
                         </th>
-                        <th>
+                        <th style={{width:'9%'}}>
                             <a onClick={this.props.sortChanged.bind(null, 'category_name', this.props.orderType)}>
                                 Category
                                 <i className={this.props.sortClass('category_name')}></i>
                             </a>
                         </th>
-                        <th>Action</th>
+                        {
+                            (this.props.isLoggedIn == 'true')
+                                ?
+                                <th>Action</th>
+                                : null
+                        }
                     </tr>
                     </thead>
                     <tbody>
@@ -101,7 +112,7 @@ var SearchByName = React.createClass({
     render: function() {
         return (
             <form role="search" action='#'>
-                <div className="input-group col-md-3 pull-left">
+                <div className="input-group col-md-3 margin-bottom-1em pull-left">
                     <input
                         type="text"
                         className="form-control searchbox"
@@ -125,21 +136,22 @@ var TopActionsComponent = React.createClass({
             <div className="">
                 <SearchByName searchText={this.props.searchText} searchTerm={this.props.searchTerm} onInputSearchChange={this.props.onInputSearchChange} />
 
-                <a href="#create"
-                   className="btn btn-primary margin-bottom-1em pull-right"
-                >
-                    <span className='glyphicon glyphicon-plus'></span>&nbsp;
-                    Create Product
-                </a>
+                {
+                    (this.props.isLoggedIn == 'true')
+                    ?
+                        <div>
+                            <a href="#create" className="btn btn-primary margin-bottom-1em pull-right" >
+                                <span className='glyphicon glyphicon-plus'></span>&nbsp;
+                                Create Product
+                            </a>
 
-                <button
-                    className="btn btn-danger margin-bottom-1em pull-right"
-                    onClick={this.props.deleteSelected}
-                    style={{marginRight:'10px'}}
-                >
-                    <span className='glyphicon glyphicon-trash'></span>&nbsp;
-                    Delete Selected Products
-                </button>
+                            <button className="btn btn-danger margin-bottom-1em pull-right" onClick={this.props.deleteSelected} style={{marginRight:'10px'}}>
+                                <span className='glyphicon glyphicon-trash'></span>&nbsp;
+                                Delete Selected Products
+                            </button>
+                        </div>
+                    : null
+                }
             </div>
         );
     }
@@ -179,46 +191,49 @@ var PaginationComponent = React.createClass({
         // return paging buttons and 'go to page' form
         return (
             !this.props.productsAmount ? null :
-                <nav className='overflow-hidden'>
-                    <ul className='pagination pull-left margin-zero'>
-                        {
-                            this.props.currentPage == 1 ? null :
-                                <li>
-                                    <a href={'#page=1' + appendUrl} onClick={this.props.onPageChanged.bind(null,1)}>
-                                        <span style={{marginRight: '0 .5em'}}>&laquo;</span>
-                                    </a>
-                                </li>
-                        }
+                <nav className='overflow-hidden' style={{marginBottom:'20px'}}>
+                    {
+                        (pagesAmount - 1) <= 0 ? null :
+                        <ul className='pagination pull-left margin-zero'>
+                            {
+                                this.props.currentPage == 1 ? null :
+                                    <li>
+                                        <a href={'#page=1' + appendUrl} onClick={this.props.onPageChanged.bind(null,1)}>
+                                            <span style={{marginRight: '0 .5em'}}>&laquo;</span>
+                                        </a>
+                                    </li>
+                            }
 
-                        {
-                            this.props.currentPage == 1 ? null :
-                                <li>
-                                    <a href={'#page='+ (this.props.currentPage - 1) + appendUrl} onClick={this.props.onPageChanged.bind(null,1)}>
-                                        <span style={{marginRight: '0 .5em'}}>&lsaquo;</span>
-                                    </a>
-                                </li>
-                        }
+                            {
+                                this.props.currentPage == 1 ? null :
+                                    <li>
+                                        <a href={'#page='+ (this.props.currentPage - 1) + appendUrl} onClick={this.props.onPageChanged.bind(null,1)}>
+                                            <span style={{marginRight: '0 .5em'}}>&lsaquo;</span>
+                                        </a>
+                                    </li>
+                            }
 
-                        { pageIndicators }
+                            { pageIndicators }
 
-                        {
-                            this.props.currentPage == pagesAmount ? null :
-                                <li>
-                                    <a href={'#page='+ (parseInt(this.props.currentPage) + 1) + appendUrl} onClick={this.props.onPageChanged.bind(null, pagesAmount)}>
-                                        <span style={{marginRight: '0 .5em'}}>&rsaquo;</span>
-                                    </a>
-                                </li>
-                        }
+                            {
+                                this.props.currentPage == pagesAmount ? null :
+                                    <li>
+                                        <a href={'#page='+ (parseInt(this.props.currentPage) + 1) + appendUrl} onClick={this.props.onPageChanged.bind(null, pagesAmount)}>
+                                            <span style={{marginRight: '0 .5em'}}>&rsaquo;</span>
+                                        </a>
+                                    </li>
+                            }
 
-                        {
-                            this.props.currentPage == pagesAmount ? null :
-                                <li>
-                                    <a href={'#page=' + pagesAmount + appendUrl} onClick={this.props.onPageChanged.bind(null, pagesAmount)}>
-                                        <span style={{marginRight: '0 .5em'}}>&raquo;</span>
-                                    </a>
-                                </li>
-                        }
-                    </ul>
+                            {
+                                this.props.currentPage == pagesAmount ? null :
+                                    <li>
+                                        <a href={'#page=' + pagesAmount + appendUrl} onClick={this.props.onPageChanged.bind(null, pagesAmount)}>
+                                            <span style={{marginRight: '0 .5em'}}>&raquo;</span>
+                                        </a>
+                                    </li>
+                            }
+                        </ul>
+                    }
 
                     <form method="get" action="#">
                         <div className="input-group col-md-2 pull-right">
@@ -240,7 +255,7 @@ var PaginationComponent = React.createClass({
                         </div>
 
                         <div className="input-group col-md-3 pull-right" style={{marginRight:'10px'}}>
-                            <select name="" className="form-control" onChange={this.props.itemPerPageChanged}>
+                            <select value={this.props.productsPerPage} name="" className="form-control" onChange={this.props.itemPerPageChanged}>
                                 <option value="5">Show 5 Products per page</option>
                                 <option value="10">Show 10 Products per page</option>
                                 <option value="25">Show 25 Products per page</option>
@@ -263,11 +278,17 @@ var ReadProductsComponent = React.createClass({
             products: [],
             count: 0,
             loading: true,
-            selectedRows: []
+            selectedRows: [],
+            isLoggedIn: ''
         };
     },
 
     componentDidMount: function() {
+        this.serverRequest = $.get('api/is_logged_in.php', function(result) {
+            this.setState({
+                isLoggedIn: result
+            });
+        }.bind(this));
         this.populateProducts();
     },
 
@@ -323,9 +344,8 @@ var ReadProductsComponent = React.createClass({
     },
 
     pageChanged: function(destPage, e) {
-        //e.preventDefault();
         window.location.replace('#page=' + destPage + '&search=' + this.state.search + '&order_by=' + this.state.orderBy + '&order_type=' + this.state.orderType + '&item_per_page=' + this.state.limit);
-        //window.location.replace('#page=' + destPage + '&search=' + this.state.search);
+
         /**
          * setState() does not immediately mutate this.state but creates a pending state transition. Accessing this.state after calling this method
          * can potentially return the existing value. There is no guarantee of synchronous operation of calls to setState and calls may be batched
@@ -354,7 +374,6 @@ var ReadProductsComponent = React.createClass({
     },
 
     searchTerm: function(e) {
-        //window.location.replace('#page=' + this.state.currentPage + '&search=' + this.state.search);
         window.location.replace('#page=' + this.state.currentPage + '&search=' + this.state.search + '&order_by=' + this.state.orderBy + '&order_type=' + this.state.orderType + '&item_per_page=' + this.state.limit);
         if(!e.target.value) {
             this.setState({
@@ -387,7 +406,9 @@ var ReadProductsComponent = React.createClass({
 
     toggleOne: function(checked, id) {
         if(checked){
-            this.setState({selectedRows: this.state.selectedRows.concat([id])});
+            this.setState({
+                selectedRows: this.state.selectedRows.concat([id])
+            });
         }else {
             this.setState({
                 selectedRows: this.state.selectedRows.filter((el) => el !== id)
@@ -460,6 +481,7 @@ var ReadProductsComponent = React.createClass({
                     onInputSearchChange={this.onInputSearchChanged}
                     searchTerm={this.searchTerm}
                     deleteSelected={this.deleteSelected}
+                    isLoggedIn={this.state.isLoggedIn}
                 />
 
                 <Loader isLoading={this.state.loading} />
@@ -472,6 +494,7 @@ var ReadProductsComponent = React.createClass({
                     sortClass={this.sortClass}
                     sortChanged={this.sortChanged}
                     selectedRows={this.state.selectedRows}
+                    isLoggedIn={this.state.isLoggedIn}
                 />
 
                 <PaginationComponent

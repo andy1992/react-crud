@@ -57,6 +57,8 @@ var MainApp = React.createClass({
         currentMode = currentMode.startsWith('search') ? (currentMode.split('='))[0] : currentMode;
         currentMode = currentMode.startsWith('show') ? (currentMode.split('?'))[0] : currentMode;
         currentMode = currentMode.startsWith('delete') ? (currentMode.split('?'))[0] : currentMode;
+        currentMode = currentMode.startsWith('login') ? (currentMode.split('?'))[0] : currentMode;
+        currentMode = currentMode.startsWith('register') ? (currentMode.split('?'))[0] : currentMode;
 
         var productId = 0;
         var searchedTerm = '';
@@ -111,12 +113,28 @@ var MainApp = React.createClass({
                 productId = (this.props.location[0].split('?')[1]).split('=')[1];
                 modeComponent = <DeleteProductComponent productId={productId} />;
                 break;
+            case 'login':
+                modeComponent = <LoginComponent />;
+                break;
+            case 'register':
+                modeComponent = <RegisterComponent />;
+                break;
             default:
                 $('.page-header').html('<h1>Oops..</h1>');
                 modeComponent = <NotFoundComponent />;
                 break;
         }
-        return modeComponent;
+        var navComponent = <NavComponent />;
+        return (
+            <div>
+                {
+                    navComponent
+                }
+                {
+                    modeComponent
+                }
+            </div>
+        );
     }
 });
 
@@ -136,6 +154,13 @@ function handleNewWindowLocation() {
         <MainApp location={location} />,
         document.getElementById('content')
     );
+}
+
+function isLoggedIn() {
+    $.get('api/is_logged_in.php', function(is_logged_in) {
+        return is_logged_in;
+    });
+    return 'false';
 }
 
 handleNewWindowLocation();

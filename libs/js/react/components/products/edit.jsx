@@ -9,7 +9,8 @@ var UpdateProductComponent = React.createClass({
             price: 0,
             selectedCategoryId: 0,
             categories: [],
-            successUpdate: null
+            successUpdate: null,
+            isLoggedIn: ''
         };
     },
 
@@ -35,9 +36,19 @@ var UpdateProductComponent = React.createClass({
                 this.setState({description: p.description});
                 $('.page-header h1').text(p.name);
             }.bind(this));
+
+        this.serverRequest = $.get('api/is_logged_in.php', function(result) {
+            if(result == 'true')
+                this.setState({
+                    isLoggedIn: result
+                });
+            else
+                window.location.href = '#';
+        }.bind(this));
     },
 
     componentWillUnmount: function() {
+        this.serverRequest.abort();
         this.serverRequestCat.abort();
         this.serverRequestProd.abort();
     },

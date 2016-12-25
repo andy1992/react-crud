@@ -15,7 +15,7 @@ var NavComponent = React.createClass({
                     isLoggedIn: 'false'
                 });
 
-            window.location.href = "#";
+            window.location.href = "#login";
         }.bind(this));
     },
 

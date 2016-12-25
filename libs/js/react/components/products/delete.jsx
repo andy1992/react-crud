@@ -1,8 +1,26 @@
 "use strict";
 
 var DeleteProductComponent = React.createClass({
+    getInitialState:function() {
+        return {
+            isLoggedIn: ''
+        };
+    },
+
     componentDidMount: function() {
+        this.serverRequest = $.get('api/is_logged_in.php', function(result) {
+            if(result == 'true')
+                this.setState({
+                    isLoggedIn: result
+                });
+            else
+                window.location.href = '#';
+        }.bind(this));
         $('.page-header h1').text('Delete Product');
+    },
+
+    componentWillUnmount: function() {
+        this.serverRequest.abort();
     },
 
     onDelete: function(e) {
@@ -18,6 +36,7 @@ var DeleteProductComponent = React.createClass({
     },
 
     render: function() {
+
         return (
             <div className="row">
                 <div className="col-md-3"></div>

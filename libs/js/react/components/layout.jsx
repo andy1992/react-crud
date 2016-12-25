@@ -156,13 +156,6 @@ function handleNewWindowLocation() {
     );
 }
 
-function isLoggedIn() {
-    $.get('api/is_logged_in.php', function(is_logged_in) {
-        return is_logged_in;
-    });
-    return 'false';
-}
-
 handleNewWindowLocation();
 
 window.addEventListener('hashchange', handleNewWindowLocation, false);

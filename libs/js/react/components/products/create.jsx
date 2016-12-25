@@ -8,7 +8,8 @@ var CreateProductComponent = React.createClass({
             name: '',
             description: '',
             price: 0.00,
-            successCreation: null
+            successCreation: null,
+            isLoggedIn: ''
         };
     },
 
@@ -17,6 +18,16 @@ var CreateProductComponent = React.createClass({
             this.setState({
                 categories: JSON.parse(categories)
             });
+        }.bind(this));
+
+        this.serverRequest = $.get('api/is_logged_in.php', function(result) {
+            if(result == 'true')
+                this.setState({
+                    isLoggedIn: result
+                });
+            else
+                window.location.href = '#';
+
         }.bind(this));
 
         $('.page-header h1').text('Create product');
@@ -71,6 +82,7 @@ var CreateProductComponent = React.createClass({
 
     // THE FORM
     render: function() {
+
         var categoriesOptions = this.state.categories.map(function(category) {
             return (
                 <option key={category.id} value={category.id}>{category.name}</option>

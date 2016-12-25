@@ -18,6 +18,9 @@ var LoginComponent = React.createClass({
             this.setState({
                 isLoggedIn: result
             });
+
+            if(result == 'true')
+                window.location.href = '#';
         }.bind(this));
         $('.page-header h1').text('Sign In');
     },
@@ -51,16 +54,13 @@ var LoginComponent = React.createClass({
                 if(res.user != null) {
                     this.setState({id: res.user.id});
                     this.setState({email: res.user.email});
-                    window.location.href = "http://localhost:8081/react-crud";
+                    window.location.reload();
                 }
             }.bind(this));
         e.preventDefault();
     },
 
     render: function() {
-        if(this.state.isLoggedIn == 'true')
-            window.location.href = '#';
-
         return (
             <div>
                 <div className="col-md-4"></div>

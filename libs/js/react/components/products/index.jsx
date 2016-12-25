@@ -31,7 +31,13 @@ var ProductRow = React.createClass({
                                 Delete
                             </a>
                         </td>
-                    : null
+                    :
+                        <td>
+                            <a href={'#show?id='+this.props.product.id}
+                               className="btn btn-info m-r-1em">
+                                Read
+                            </a>
+                        </td>
                 }
             </tr>
         );
@@ -91,12 +97,7 @@ var ProductsTable = React.createClass({
                                 <i className={this.props.sortClass('category_name')}></i>
                             </a>
                         </th>
-                        {
-                            (this.props.isLoggedIn == 'true')
-                                ?
-                                <th>Action</th>
-                                : null
-                        }
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>

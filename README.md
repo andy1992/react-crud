@@ -20,7 +20,7 @@ Since the project used MySQL Database, you could find the exported database on t
 ####3. Setup config based on your environment on the config/database.php
 Set the hostname, database name, username, and password based on your database configuration.
 
-```sh
+```php
 
 class Database{
     private $host = "localhost";
@@ -29,7 +29,7 @@ class Database{
     private $password = "secret";
     public $conn;
 
-    ...
+    //...
 }
 ```
 

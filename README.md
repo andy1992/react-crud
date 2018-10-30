@@ -20,7 +20,7 @@ $ git clone https://github.com/andy1992/react-crud.git
 ### 2. Import the database from /database directory to your MySQL Database
 Since the project used MySQL Database, you could find the exported database on the /database directory, and import it to your MySQL Database.
 
-### 3. Setup config based on your environment on the config/database.php
+### 3. Setup config based on your environment in the config/database.php
 Set the hostname, database name, username, and password based on your database configuration.
 
 ```php
